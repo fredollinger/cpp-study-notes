@@ -1,0 +1,160 @@
+<?xml version="1.0"?> <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [ ]>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude" id="pointers">
+    <title>Pointers</title>
+
+    <para>
+    I got this from: <ulink
+    url="http://beginnersbook.com/2014/01/c-pointers/">
+    <citetitle>Pointers in C with examples</citetitle></ulink>.
+    </para>
+
+    <para>
+        A pointer is a variable that points to a section of memory. Below
+        is a program that points to a block of memory to show how we can
+        access memory in C.
+    </para>
+
+    <section>
+    <title>
+   Address of Operator
+    </title>
+
+    <para> Before we look at pointers, we'll define what we mean by computer memory in address.c.</para>
+
+   <para><programlisting><![CDATA[
+#include <stdio.h>
+
+int var = 1;
+int main()
+{
+   int num = 10;
+   printf("Value of var is: %d \n ", num);
+   printf("Address of var is: %p \n", &num);
+   return 0;
+}
+   ]]></programlisting></para>
+
+   <para><programlisting><![CDATA[
+Value of var is: 10
+Address of var is: 0x7ffd5d20b56c
+   ]]></programlisting></para>
+
+    <para> Thus, in this context the amperstand is the "Address Of" operator. </para>
+
+   </section>
+
+    <section>
+    <title>
+    Value At Address Operator
+    </title>
+
+    <para>Use the asterisk to create a pointer to a variable. The following
+	    example shows how pointers work, but it's for demonstration
+	    purposes only as we either have an address to a variable or a
+	    variable, but usually not both. Here's pointer.c: </para>
+
+   <para><programlisting><![CDATA[
+#include <stdio.h>
+int main()
+{
+    int var =10;
+    int *p;
+    p= &var;
+
+    printf ( "\n Address of var is: %p \n", &var);
+    printf ( "\n Address of var is: %p \n", p);
+
+    printf ( "\n Address of pointer p is: %p \n", &p);
+
+    /* Note I have used %p for p's value as it should be an address*/
+    printf( "\n Value of pointer p is: %p \n", p);
+
+    printf ( "\n Value of var is: %d \n", var);
+    printf ( "\n Value of var is: %d \n", *p);
+    printf ( "\n Value of var is: %d \n", *( &var));
+}
+
+   </section>
+   ]]></programlisting></para>
+
+   <para><programlisting><![CDATA[
+ Address of var is: 0x7ffda322535c
+
+ Address of var is: 0x7ffda322535c
+
+ Address of pointer p is: 0x7ffda3225350
+
+ Value of pointer p is: 0x7ffda322535c
+
+ Value of var is: 10
+
+ Value of var is: 10
+
+ Value of var is: 10
+   ]]></programlisting></para>
+   </section>
+
+   <section>
+   <title>
+   Sending Pointers To Functions
+   </title>
+   <para> TBD </para>
+   </section>
+
+   <section>
+   <title>
+   Treating A Pointer As An Array
+   </title>
+   <para> TBD </para>
+   </section>
+
+   <section>
+   <title>
+   C Strings
+   </title>
+   <para> TBD </para>
+   </section>
+
+   <section>
+   <title>
+   Stack vs. Heap
+   </title>
+   <para> TBD </para>
+   </section>
+
+   <section>
+   <title>
+   Dynamically Allocating Memory: Malloc, Free, New Delete
+   </title>
+   <para> TBD </para>
+   </section>
+
+   <section>
+   <title>
+   Memory leak
+   </title>
+   <para> TBD </para>
+   </section>
+
+   <section>
+   <title>
+   Segmentation Fault
+   </title>
+   <para> TBD </para>
+   </section>
+
+   <section>
+   <title>
+   Member variables of structs and classes.
+   </title>
+   <para> TBD </para>
+   </section>
+
+   <section>
+   <title>
+   NULL vs. nullptr
+   </title>
+   <para> TBD </para>
+   </section>
+
+</chapter>

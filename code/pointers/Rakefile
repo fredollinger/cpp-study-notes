@@ -1,0 +1,28 @@
+task :default => :build
+BUILDDIR="builddir"
+
+desc "build it"
+task :build => 'builddir' do
+    sh "cd #{BUILDDIR} && ninja"
+end
+
+task 'builddir' do
+    if not File.directory?(BUILDDIR) then
+        sh "meson #{BUILDDIR}"
+    end
+end
+
+# test regular
+task :clean do
+    sh "rm -rf #{BUILDDIR}"
+end
+
+# test cli app
+#task :address do
+#    sh "#{BUILDDIR}/daytimeserver"
+#end
+
+rule "" do |t|
+    t.name
+    sh "#{BUILDDIR}/#{t}"
+end
