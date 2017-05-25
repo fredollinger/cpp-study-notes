@@ -9,14 +9,14 @@ void swap (int *pa, int *pb) {
 
 int main()
 {
-   int a = 10;
-   int b = 20;
+    int a = 10;
+    int b = 20;
 
-   printf("before swap a: [%i] b: [%i] \n", a, b);
+    printf("before swap a: [%i] b: [%i] \n", a, b);
 
-   swap(&a, &b);
+    swap(&a, &b);
 
-   printf("after swap a: [%i] b: [%i] \n", a, b);
+    printf("after swap a: [%i] b: [%i] \n", a, b);
 
-   return 0;
+    return 0;
 }

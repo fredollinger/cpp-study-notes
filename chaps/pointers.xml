@@ -186,21 +186,71 @@ cc  '-Iconst@exe' '-I.' '-I..' '-fdiagnostics-color=always' '-pipe' '-D_FILE_OFF
     This is a good thing as it can stop us from doing something which we
     promise not to do.
     </para>
-
    </section>
+
 
    <section>
    <title>
    Treating A Pointer As An Array
    </title>
-   <para> TBD </para>
-   </section>
 
-   <section>
-   <title>
-   C Strings
-   </title>
-   <para> TBD </para>
+    <para>
+    I got this from: <ulink
+	    url="https://www.cs.bu.edu/teaching/c/string/intro/">
+    <citetitle>Pointers in C with examples</citetitle></ulink>.
+    </para>
+
+   <para> First we'll start by covering arrays. An array is a variable that
+	   holds multiple values of the same type. Let's make an array of ints.
+   </para>
+
+
+   <para><programlisting><![CDATA[
+#include <stdio.h>
+
+int main()
+{
+    int arr[3] ={ 1, 2, 3 } ;
+    printf("arr: [%i] \n", arr[1]);
+
+    return 0;
+}
+   ]]></programlisting></para>
+
+<para> Output: </para>
+
+   <para><programlisting><![CDATA[
+arr: [2]
+   ]]></programlisting></para>
+
+<para> Let's make a character array, which is a C string. Note that C will
+	automatically allocate the size of the array for us if we leave the number of elements
+	blank. </para>
+
+   <para><programlisting><![CDATA[
+#include <stdio.h>
+
+int main()
+{
+    char label[] = "Single";
+    printf("label: [%s] \n", label);
+    printf("label: [%c] \n", label[2]);
+
+    return 0;
+}
+   ]]></programlisting></para>
+
+<para>Output: </para>
+
+   <para><programlisting><![CDATA[
+label: [Single]
+printf("label: [%c] \n", label[2]);
+   ]]></programlisting></para>
+
+<para>We also learn that we can access a C string just like a normal array.</para>
+
+<para> NEXT SHOW HOW WE CAN USE A POINTER TO AN ARRAY TO ACCESS CHARACTERS.</para>
+
    </section>
 
    <section>
