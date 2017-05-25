@@ -73,11 +73,13 @@ int main()
     printf ( "\n Value of var is: %d \n", *p);
     printf ( "\n Value of var is: %d \n", *( &var));
 }
-
-   </section>
    ]]></programlisting></para>
 
-   <para><programlisting><![CDATA[
+    <para>
+    Here's the output:
+    </para>
+
+    <para><programlisting><![CDATA[
  Address of var is: 0x7ffda322535c
 
  Address of var is: 0x7ffda322535c
@@ -98,7 +100,93 @@ int main()
    <title>
    Sending Pointers To Functions
    </title>
-   <para> TBD </para>
+   <para> Here's a classic example which shows how pointers differ from regular
+	   variables. Sending a regular variable to a function will yield the
+	   same variables when you are done because we pass by value. But if we
+	   pass by reference to memory, we can actually allow a function to
+	   change a variable.
+   </para>
+
+   <para><programlisting><![CDATA[
+
+#include <stdio.h>
+
+void swap (int *pa, int *pb) {
+    int tmp;
+    tmp = *pa;
+    *pa = *pb;
+    *pb = tmp;
+}
+
+int main()
+{
+   int a = 10;
+   int b = 20;
+
+   printf("before swap a: [%i] b: [%i] \n", a, b);
+
+   swap(&a, &b);
+
+   printf("after swap a: [%i] b: [%i] \n", a, b);
+
+   return 0;
+}
+   ]]></programlisting></para>
+
+   Running the program:
+
+   <para><programlisting><![CDATA[
+before swap a: [10] b: [20]
+after swap a: [20] b: [10]
+   ]]></programlisting></para>
+
+   <para> Often, you don't want to have your variales modified when they are
+	   sent to a function. To show this in an api, use the keyword const
+	   which allows you to promise that you won't make this change.
+   </para>
+
+   <para><programlisting><![CDATA[
+#include <stdio.h>
+
+void swap (const int *pa, const int *pb) {
+    int tmp;
+    tmp = *pa;
+    *pa = *pb;
+    *pb = tmp;
+}
+
+int main()
+{
+   int a = 10;
+   int b = 20;
+
+   printf("before swap a: [%i] b: [%i] \n", a, b);
+
+   swap(&a, &b);
+
+   printf("after swap a: [%i] b: [%i] \n", a, b);
+
+   return 0;
+}
+   ]]></programlisting></para>
+
+<para> Compiling this gives the following error:</para>
+
+   <para><programlisting><![CDATA[
+cc  '-Iconst@exe' '-I.' '-I..' '-fdiagnostics-color=always' '-pipe' '-D_FILE_OFFSET_BITS=64' '-Wall' '-Winvalid-pch' '-O0' '-g' '-fuse-ld=gold' '-MMD' '-MQ' 'const@exe/const.c.o' '-MF' 'const@exe/const.c.o.d' -o 'const@exe/const.c.o' -c ../const.c
+../const.c: In function ‘swap’:
+../const.c:6:9: error: assignment of read-only location ‘*pa’
+     *pa = *pb;
+         ^
+../const.c:7:9: error: assignment of read-only location ‘*pb’
+     *pb = tmp;
+   ]]></programlisting></para>
+
+    <para>
+    This is a good thing as it can stop us from doing something which we
+    promise not to do.
+    </para>
+
    </section>
 
    <section>
