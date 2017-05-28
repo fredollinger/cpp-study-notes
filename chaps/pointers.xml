@@ -14,7 +14,7 @@
         access memory in C.
     </para>
 
-    <section>
+    <sect1>
     <title>
    Address of Operator
     </title>
@@ -41,17 +41,17 @@ Address of var is: 0x7ffd5d20b56c
 
     <para> Thus, in this context the amperstand is the "Address Of" operator. </para>
 
-   </section>
+   </sect1>
 
-    <section>
+    <sect1>
     <title>
     Value At Address Operator
     </title>
 
     <para>Use the asterisk to create a pointer to a variable. The following
-	    example shows how pointers work, but it's for demonstration
-	    purposes only as we either have an address to a variable or a
-	    variable, but usually not both. Here's pointer.c: </para>
+        example shows how pointers work, but it's for demonstration
+        purposes only as we either have an address to a variable or a
+        variable, but usually not both. Here's pointer.c: </para>
 
    <para><programlisting><![CDATA[
 #include <stdio.h>
@@ -94,17 +94,17 @@ int main()
 
  Value of var is: 10
    ]]></programlisting></para>
-   </section>
+   </sect1>
 
-   <section>
+   <sect1>
    <title>
    Sending Pointers To Functions
    </title>
    <para> Here's a classic example which shows how pointers differ from regular
-	   variables. Sending a regular variable to a function will yield the
-	   same variables when you are done because we pass by value. But if we
-	   pass by reference to memory, we can actually allow a function to
-	   change a variable.
+       variables. Sending a regular variable to a function will yield the
+       same variables when you are done because we pass by value. But if we
+       pass by reference to memory, we can actually allow a function to
+       change a variable.
    </para>
 
    <para><programlisting><![CDATA[
@@ -141,8 +141,8 @@ after swap a: [20] b: [10]
    ]]></programlisting></para>
 
    <para> Often, you don't want to have your variales modified when they are
-	   sent to a function. To show this in an api, use the keyword const
-	   which allows you to promise that you won't make this change.
+       sent to a function. To show this in an api, use the keyword const
+       which allows you to promise that you won't make this change.
    </para>
 
    <para><programlisting><![CDATA[
@@ -168,11 +168,11 @@ int main()
 
    return 0;
 }
-   ]]></programlisting></para>
+    ]]></programlisting></para>
 
-<para> Compiling this gives the following error:</para>
+    <para> Compiling this gives the following error:</para>
 
-   <para><programlisting><![CDATA[
+    <para><programlisting><![CDATA[
 cc  '-Iconst@exe' '-I.' '-I..' '-fdiagnostics-color=always' '-pipe' '-D_FILE_OFFSET_BITS=64' '-Wall' '-Winvalid-pch' '-O0' '-g' '-fuse-ld=gold' '-MMD' '-MQ' 'const@exe/const.c.o' '-MF' 'const@exe/const.c.o.d' -o 'const@exe/const.c.o' -c ../const.c
 ../const.c: In function ‘swap’:
 ../const.c:6:9: error: assignment of read-only location ‘*pa’
@@ -180,28 +180,28 @@ cc  '-Iconst@exe' '-I.' '-I..' '-fdiagnostics-color=always' '-pipe' '-D_FILE_OFF
          ^
 ../const.c:7:9: error: assignment of read-only location ‘*pb’
      *pb = tmp;
-   ]]></programlisting></para>
+    ]]></programlisting></para>
 
     <para>
     This is a good thing as it can stop us from doing something which we
     promise not to do.
     </para>
-   </section>
+    </sect1>
 
+    <sect1>
+    <title> Arrays and Pointers </title>
 
-   <section>
-   <title>
-   Treating A Pointer As An Array
-   </title>
+    <sect2>
+    <title> What Are Arrays? </title>
 
     <para>
     I got this from: <ulink
-	    url="https://www.cs.bu.edu/teaching/c/string/intro/">
+        url="https://www.cs.bu.edu/teaching/c/string/intro/">
     <citetitle>Pointers in C with examples</citetitle></ulink>.
     </para>
 
    <para> First we'll start by covering arrays. An array is a variable that
-	   holds multiple values of the same type. Let's make an array of ints.
+       holds multiple values of the same type. Let's make an array of ints.
    </para>
 
 
@@ -217,17 +217,17 @@ int main()
 }
    ]]></programlisting></para>
 
-<para> Output: </para>
+    <para> Output: </para>
 
-   <para><programlisting><![CDATA[
+    <para><programlisting><![CDATA[
 arr: [2]
    ]]></programlisting></para>
 
-<para> Let's make a character array, which is a C string. Note that C will
-	automatically allocate the size of the array for us if we leave the number of elements
-	blank. </para>
+    <para> Let's make a character array, which is a C string. Note that C will
+    automatically allocate the size of the array for us if we leave the
+    number of elements blank. </para>
 
-   <para><programlisting><![CDATA[
+    <para><programlisting><![CDATA[
 #include <stdio.h>
 
 int main()
@@ -240,59 +240,146 @@ int main()
 }
    ]]></programlisting></para>
 
-<para>Output: </para>
+    <para>Output: </para>
 
-   <para><programlisting><![CDATA[
+    <para><programlisting><![CDATA[
 label: [Single]
 printf("label: [%c] \n", label[2]);
+    ]]></programlisting></para>
+
+    <para>We also learn that we can access a C string just like a normal array.</para>
+
+    <para> NEXT SHOW HOW WE CAN USE A POINTER TO AN ARRAY TO ACCESS CHARACTERS.</para>
+    </sect2>
+
+    <sect2>
+    <title> How To Use A Pointer To An Array </title>
+    <para>
+    Here we demonstrate that pointers are merely indexes into arrays. It also
+    shows that the increment operator will automatically increment the size of
+    the type. That is, an int is different from a double, but if you increment
+    a given type of pointer, it will automatically increment properly. Because
+    of this, in order for this to work, you must know the size of the type at
+    compile time.
+    </para>
+
+    <para><programlisting><![CDATA[
+#include <stdio.h>
+
+int main()
+{
+    int arr[4] = { 1, 2, 3, 4 };
+    int *parr = arr;
+    printf("parr: [%i] \n", *parr);
+    parr++;
+    printf("parr: [%i] \n", *parr);
+
+    return 0;
+}
+    ]]></programlisting></para>
+
+    <para> Output: </para>
+
+    <para><programlisting><![CDATA[
+parr: [1]
+parr: [2]
+    ]]></programlisting></para>
+
+    </sect2>
+    </sect1>
+
+    <sect1>
+    <title>
+    Dynamically Allocating Memory I (Malloc and Free)
+    </title>
+
+    <para>
+    In C (and in any programming language) each variable uses memory. C is unique in that it's one of the few langauges which exposes some of the details of this proceess.
+    </para>
+
+    <para>
+    In this example, we're going to create an array, but we don't know at
+    compile time how large to make it.
+    </para>
+
+   <para><programlisting><![CDATA[
+#include <stdio.h>   // printf()
+#include <stdlib.h>  // malloc()
+#include <string.h> // bzero()
+
+#define ARRAY_SIZE 5
+
+int main()
+{
+    int *pint;
+    pint = (int *) malloc(sizeof(int) * ARRAY_SIZE);
+    bzero(pint, sizeof(int) * ARRAY_SIZE);
+
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        printf("[%i]: [%i] \n", i, *(pint+i));
+    }
+
+    return 0;
+}
    ]]></programlisting></para>
 
-<para>We also learn that we can access a C string just like a normal array.</para>
+    <para> Output: </para>
 
-<para> NEXT SHOW HOW WE CAN USE A POINTER TO AN ARRAY TO ACCESS CHARACTERS.</para>
+    <para><programlisting><![CDATA[
+[0]: [0]
+[1]: [0]
+[2]: [0]
+[3]: [0]
+[4]: [0]
+    ]]></programlisting></para>
 
-   </section>
+    <para> Note, one can modify ARRAY_SIZE and allocate and zero different amounts of memory.
+    </para>
 
-   <section>
-   <title>
-   Stack vs. Heap
-   </title>
-   <para> TBD </para>
-   </section>
+    </sect1>
 
-   <section>
-   <title>
-   Dynamically Allocating Memory: Malloc, Free, New Delete
-   </title>
-   <para> TBD </para>
-   </section>
+    <sect1>
+    <title>
+    Dynamically Allocating Memory: Malloc, Free, New, Delete
+    </title>
+    <para>
+    SECTION STACK VS. HEAP
+    </para>
+    </sect1>
 
-   <section>
-   <title>
-   Memory leak
-   </title>
-   <para> TBD </para>
-   </section>
+    <sect1>
+    <title>
+    Pointers To Pointers
+    </title>
+    <para> TBD </para>
+    </sect1>
 
-   <section>
-   <title>
-   Segmentation Fault
-   </title>
-   <para> TBD </para>
-   </section>
+    <sect1>
+    <title>
+    Memory leak
+    </title>
+    <para> TBD </para>
+    </sect1>
 
-   <section>
-   <title>
-   Member variables of structs and classes.
-   </title>
-   <para> TBD </para>
-   </section>
+    <sect1>
+    <title>
+    Segmentation Fault
+    </title>
+    <para> TBD </para>
+    </sect1>
 
-   <section>
-   <title>
-   NULL vs. nullptr
-   </title>
-   <para> TBD </para>
-   </section>
+    <sect1>
+    <title>
+    Member variables of structs and classes.
+    </title>
+    <para> TBD </para>
+    </sect1>
+
+    <sect1>
+    <title>
+    NULL vs. nullptr
+    </title>
+    <para> TBD </para>
+    </sect1>
 
 </chapter>
