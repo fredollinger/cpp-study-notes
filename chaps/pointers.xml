@@ -337,6 +337,12 @@ int main()
     <para> Note, one can modify ARRAY_SIZE and allocate and zero different amounts of memory.
     </para>
 
+    <para>Note that you should get in the habit of reading the manpages for things like bzero.</para>
+
+    <para><programlisting><![CDATA[
+ $ man bzero
+    ]]></programlisting></para>
+
     </sect2>
 
     <sect2>
@@ -485,7 +491,6 @@ Segmentation fault
 
     </sect2>
 
-
     <sect2>
     <title>
     Using The Debugger To Find Why A Program Crashed
@@ -527,6 +532,87 @@ warning: Source file is more recent than executable.
     <para> In this example, we were able to find the line that the segfault was on. </para>
 
     </sect2>
+
+    <sect2>
+    <title>
+    Using A Pointer After It's Deleted
+    </title>
+
+    <para>
+	    Though these examples are contrived, the actual bugs are very common. In this case, we delete a pointer then try to access it after it's been deleted.
+    </para>
+
+    <para><programlisting><![CDATA[
+#include <stddef.h> // for NULL
+#include <stdio.h> // for printf
+
+int main()
+{
+    int *p = new int();
+    *p = 10;
+
+    printf ( "\n Address of var is: %p \n", p);
+
+    delete p;
+    p = NULL;
+
+    *p = 20;
+
+    printf ( "\n Address of var is: %p \n", p);
+
+    return 0;
+}
+    ]]></programlisting></para>
+
+    <para>It's an excercise for the reader to find the line where we segfault as
+	well as running gdb on this example.</para>
+
+    </sect2>
+    </sect1>
+
+    <sect1>
+    <title>
+    NULL vs. nullptr
+    </title>
+
+    <para>
+    I got this from: <ulink
+    url="http://beginnersbook.com/2014/01/c-pointers/">
+    <citetitle> A name for the null pointer: nullptr</citetitle></ulink>.
+    </para>
+
+    <para>C++ introduced nullptr to replace NULL in C++11. Thus, in new C++ code, you should NEVER use NULL, but rather use nullptr.
+    </para>
+
+    <para><programlisting><![CDATA[
+#include <stdio.h> // for printf
+
+int main()
+{
+    int *p = new int();
+    *p = 10;
+
+    printf ( "\n Address of var is: %p \n", p);
+
+    delete p;
+    p = nullptr;
+
+    if (nullptr == p) {
+        printf ( "\n ERROR: p is uninitialized. \n");
+	return -1;
+    }
+
+    *p = 20;
+
+    printf ( "\n Address of var is: %p \n", p);
+
+    return 0;
+}
+    ]]></programlisting></para>
+
+    <para>
+	    The main advantage of nullptr is that it's less ambiguous as NUL can be confused by the compiler as 0.
+    </para>
 
     </sect1>
 
