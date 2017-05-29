@@ -616,4 +616,94 @@ int main()
 
     </sect1>
 
+    <sect1>
+    <title>
+    Struct
+    </title>
+
+    <para>
+    I got this from: <ulink url="https://en.wikipedia.org/wiki/Struct_%28C_programming_language%29">
+    <citetitle>struct (C programming language)</citetitle></ulink>.
+    </para>
+
+    <para>
+	    "The C struct directly corresponds to the assembly language data
+	    type of the same use, and both reference a contiguous block of
+	    physical memory, usually delimited (sized) by word-length
+	    boundaries. Language implementations which could utilize half-word
+	    or byte boundaries (giving denser packing, using less memory) were
+	    considered advanced in the mid-eighties. Being a block of
+	    contiguous memory, each variable within is located at a fixed
+	    offset from the index zero reference, the pointer." </para>
+
+    <para> Here's the simplest struct program.</para>
+
+
+    <para><programlisting><![CDATA[
+struct person {
+    int age;       // years
+    int height_cm; // cm
+};
+
+int main()
+{
+    struct person Fred;
+    Fred.age = 45;
+    Fred.height_cm = 70;
+    return 0;
+}
+    ]]></programlisting></para>
+
+<para>
+	Note here that we can have as many fields as we want of as many
+	different types. When we wish to refernce a field in a struct, we use
+	the dot operator.</para>
+
+<para> Next we'll use malloc to dynamically allocate a pointer to a struct. </para>
+
+    <para><programlisting><![CDATA[
+#include <stdio.h>   // printf()
+#include <stdlib.h>  // malloc()
+
+struct person {
+    int age;       // years
+    int height_cm; // cm
+};
+
+void printPerson(struct person *p) {
+    printf("printPerson() age is [%i] and height in cm is [%i] \n", p->age, p->height_cm);
+    p->age = 70;
+    p->height_cm = 40;
+}
+
+int main()
+{
+    struct person *Fred;
+    Fred = (struct person*) malloc(sizeof(struct person));
+    Fred->age = 45;
+    Fred->height_cm = 70;
+    printPerson(Fred);
+
+    printf("main() age is [%i] and height in cm is [%i] \n", Fred->age, Fred->height_cm);
+
+    return 0;
+}
+
+    ]]></programlisting></para>
+
+    <para> Output: </para>
+
+    <para><programlisting><![CDATA[
+printPerson() age is [45] and height in cm is [70]
+main() age is [70] and height in cm is [40]
+    ]]></programlisting></para>
+
+<para> In this program, we demonstrate that we can easily pass a pointer to a
+	struct to a function. Next, we demonstrate that the arrow operator is
+	used to access a field from the struct. Finally, we recall that since
+	this is passed as a non-const pointer, a function can change the
+	values.  </para>
+
+    </sect1>
+
 </chapter>
