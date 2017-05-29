@@ -21,7 +21,7 @@
 
     <para> Before we look at pointers, we'll define what we mean by computer memory in address.c.</para>
 
-   <para><programlisting><![CDATA[
+    <para><programlisting><![CDATA[
 #include <stdio.h>
 
 int var = 1;
@@ -32,12 +32,12 @@ int main()
    printf("Address of var is: %p \n", &num);
    return 0;
 }
-   ]]></programlisting></para>
+    ]]></programlisting></para>
 
-   <para><programlisting><![CDATA[
+    <para><programlisting><![CDATA[
 Value of var is: 10
 Address of var is: 0x7ffd5d20b56c
-   ]]></programlisting></para>
+    ]]></programlisting></para>
 
     <para> Thus, in this context the amperstand is the "Address Of" operator. </para>
 
@@ -53,7 +53,7 @@ Address of var is: 0x7ffd5d20b56c
         purposes only as we either have an address to a variable or a
         variable, but usually not both. Here's pointer.c: </para>
 
-   <para><programlisting><![CDATA[
+    <para><programlisting><![CDATA[
 #include <stdio.h>
 int main()
 {
@@ -73,26 +73,26 @@ int main()
     printf ( "\n Value of var is: %d \n", *p);
     printf ( "\n Value of var is: %d \n", *( &var));
 }
-   ]]></programlisting></para>
+    ]]></programlisting></para>
 
     <para>
     Here's the output:
     </para>
 
     <para><programlisting><![CDATA[
- Address of var is: 0x7ffda322535c
+Address of var is: 0x7ffda322535c
 
- Address of var is: 0x7ffda322535c
+Address of var is: 0x7ffda322535c
 
- Address of pointer p is: 0x7ffda3225350
+Address of pointer p is: 0x7ffda3225350
 
- Value of pointer p is: 0x7ffda322535c
+Value of pointer p is: 0x7ffda322535c
 
- Value of var is: 10
+Value of var is: 10
 
- Value of var is: 10
+Value of var is: 10
 
- Value of var is: 10
+Value of var is: 10
    ]]></programlisting></para>
    </sect1>
 
@@ -289,9 +289,10 @@ parr: [2]
     </sect1>
 
     <sect1>
-    <title>
-    Dynamically Allocating Memory I (Malloc and Free)
-    </title>
+    <title> Dynamically Allocating Memory I (Malloc and Free) </title>
+
+    <sect2>
+    <title> malloc() </title>
 
     <para>
     In C (and in any programming language) each variable uses memory. C is unique in that it's one of the few langauges which exposes some of the details of this proceess.
@@ -336,50 +337,116 @@ int main()
     <para> Note, one can modify ARRAY_SIZE and allocate and zero different amounts of memory.
     </para>
 
-    </sect1>
+    </sect2>
 
-    <sect1>
-    <title>
-    Dynamically Allocating Memory: Malloc, Free, New, Delete
-    </title>
+    <sect2>
+    <title> free() </title>
+
+    <para>Note that each time we call malloc() we need to call free(). If we don't then we'll create a memory leak. Thus, in the last program, there's a memory leak.</para>
+
+    <para>Below is an example of using free().</para>
+
+    <para><programlisting><![CDATA[
+#include <stdio.h>   // printf()
+#include <stdlib.h>  // malloc()
+#include <string.h> // bzero()
+
+char* getstr() {
+    char *pchar;
+    pchar = (char *) malloc(sizeof(char) * 10);
+    strcpy(pchar, "my string");
+    return pchar;
+}
+
+int main()
+{
+    char *str = getstr();
+    printf("[%s] \n", str);
+    free(str);
+    return 0;
+}
+    ]]></programlisting></para>
+
+    </sect2>
+
+    <sect2>
+    <title> Stack vs. Heap </title>
+
     <para>
-    SECTION STACK VS. HEAP
+    I got this from: <ulink
+    url="http://gribblelab.org/CBootCamp/7_Memory_Stack_vs_Heap.html#orgheadline1">
+    <citetitle>Memory : Stack vs Heap</citetitle></ulink>.
     </para>
+
+    <para>
+    Declaring a variable on the stack is:
+    </para>
+
+    <para><programlisting><![CDATA[
+    int i;
+    ]]></programlisting></para>
+
+    <para>
+    When you use malloc(), you are declaring a variable on the heap. Which way
+    you decide to do things depends on a few factors.
+    </para>
+
+    <para>"Every time a function declares a new variable, it is "pushed" onto
+	    the stack. Then every time a function exits, all of the variables
+	    pushed onto the stack by that function, are freed (that is to say,
+	    they are deleted)."
+    </para>
+
+    <para>
+    Thus, with the stack you don't have to do your own memory management.
+    </para>
+
+    <para> "Unlike the stack, variables created on the heap are accessible by
+	    any function, anywhere in your program. Heap variables are
+	    essentially global in scope."
+    </para>
+
+    </sect2>
+
     </sect1>
 
     <sect1>
     <title>
-    Pointers To Pointers
+    Dynamically Allocating Memory II: New, Delete
     </title>
-    <para> TBD </para>
-    </sect1>
 
-    <sect1>
-    <title>
-    Memory leak
-    </title>
-    <para> TBD </para>
-    </sect1>
+    <para>
+    Now that we understand malloc/free, we're going to look at the same concepts in C++. While you can use malloc/free in C++, generally, we use new/delete.
+    </para>
 
-    <sect1>
-    <title>
-    Segmentation Fault
-    </title>
-    <para> TBD </para>
-    </sect1>
+    <para><programlisting><![CDATA[
+#include <stdio.h>   // printf()
+#include <stdlib.h>  // malloc()
+#include <string.h> // bzero()
 
-    <sect1>
-    <title>
-    Member variables of structs and classes.
-    </title>
-    <para> TBD </para>
-    </sect1>
+#define ARRAY_SIZE 5
 
-    <sect1>
-    <title>
-    NULL vs. nullptr
-    </title>
-    <para> TBD </para>
+int main()
+{
+    int *p = new int();
+    *p = 10;
+
+    printf ( "\n Address of var is: %p \n", p);
+    printf ( "\n Value of var is: %d \n", *p);
+
+    delete p;
+    p = NULL;
+
+    return 0;
+}
+    ]]></programlisting></para>
+
+    <para>
+	    In this example, we have basically made the pointer.c example, but
+	    we have written it so it uses new/delete. Just like malloc, new
+	    will allocate on the heap and thus needs to be freed.
+    </para>
+
     </sect1>
 
 </chapter>

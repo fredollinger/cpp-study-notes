@@ -14,5 +14,7 @@ int main()
         printf("[%i]: [%i] \n", i, *(pint+i));
     }
 
+    // Need to free here
+
     return 0;
 }
