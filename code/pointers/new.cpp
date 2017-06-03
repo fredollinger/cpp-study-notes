@@ -1,8 +1,4 @@
 #include <stdio.h>   // printf()
-#include <stdlib.h>  // malloc()
-#include <string.h> // bzero()
-
-#define ARRAY_SIZE 5
 
 int main()
 {

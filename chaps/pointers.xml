@@ -421,16 +421,17 @@ int main()
     Dynamically Allocating Memory II: New, Delete
     </title>
 
+    <sect2>
+    <title>
+	    Dynamically Allocating Single Item On Heap With New
+    </title>
+
     <para>
     Now that we understand malloc/free, we're going to look at the same concepts in C++. While you can use malloc/free in C++, generally, we use new/delete.
     </para>
 
     <para><programlisting><![CDATA[
 #include <stdio.h>   // printf()
-#include <stdlib.h>  // malloc()
-#include <string.h> // bzero()
-
-#define ARRAY_SIZE 5
 
 int main()
 {
@@ -452,7 +453,51 @@ int main()
 	    we have written it so it uses new/delete. Just like malloc, new
 	    will allocate on the heap and thus needs to be freed.
     </para>
+    </sect2>
 
+    <sect2>
+    <title>
+    Arrays with new/delete
+    </title>
+
+    <para> Here we show how to allocate an array using new. In this example, we
+	    especially note that we need to use delete[] operator to match
+	    new[]. If we don't do this, we won't free all the memory, and we
+	    have created a memory leak.
+    </para>
+
+    <para><programlisting><![CDATA[
+#include <stdio.h>   // printf()
+
+void printarr(int *i, int c) {
+    printf ( "\n Address of count %i var is: %p \n", c, i + c);
+    printf ( "\n Value of count %i var is: %d \n", c, *(i+c));
+}
+
+int main()
+{
+    int size = 5;
+    int count = 0;
+    int *arr = new int[size];
+    *arr = 10;
+    *(arr+1) = 20;
+
+    printarr(arr, count);
+
+    count++;
+    printarr(arr, count);
+
+    count++;
+    printarr(arr, count);
+
+    delete[] arr;
+    arr = nullptr;
+
+    return 0;
+}
+    ]]></programlisting></para>
+
+    </sect2>
     </sect1>
 
     <sect1>
