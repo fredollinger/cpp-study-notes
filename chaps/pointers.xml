@@ -787,4 +787,87 @@ int main()
 
     </sect1>
 
+    <sect1>
+    <title>
+    Function Pointers
+    </title>
+
+    <para>
+	    Since we can access memory in C, and functions are in memory, though
+	    it's strange, it does make sense that we should be able to access
+	    functions in terms of pointers.
+    </para>
+
+    <para>
+	    Here's a contrived example, which doesn't really do anything, but it does show the syntax of function pointers.
+    </para>
+
+    <para><programlisting><![CDATA[
+#include <stdio.h> // printf
+
+int add(int a, int b) {
+    return (a+b);
+}
+
+int (*addPtr)(int, int);
+
+int main()
+{
+    int a = 10;
+    int b = 20;
+    addPtr = add;
+
+    int c = addPtr(a, b);
+
+    printf("result %i + %i = %i \n", a, b, c);
+
+    return 0;
+}
+    ]]></programlisting></para>
+
+<para> In the next example, we show how one would use a function pointer so we can swap out one algorithm for another:
+</para>
+
+    <para><programlisting><![CDATA[
+#include <stdio.h> // printf
+
+int add(int a, int b) {
+    return (a+b);
+}
+
+int subtract(int a, int b) {
+    return (a-b);
+}
+
+int (*addPtr)(int, int);
+int (*subtractPtr)(int, int);
+
+int compute(int a, int b, int (*f)(int, int)) {
+    int i;
+    int c = 0;
+    for (i = 0; i < a; i++) {
+        c = (*f)(i, b);
+    }
+    return c;
+}
+
+int main()
+{
+    int a = 10;
+    int b = 20;
+    addPtr = add;
+    subtractPtr = subtract;
+
+    int c = compute(a, b, addPtr);
+    printf("add result: %i \n", c);
+
+    c = compute(a, b, subtractPtr);
+    printf("subtract result: %i \n", c);
+
+    return 0;
+}
+    ]]></programlisting></para>
+
+    </sect1>
+
 </chapter>
