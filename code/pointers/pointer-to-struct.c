@@ -9,11 +9,12 @@ struct strstruct {
 
 int main()
 {
-    printf("TDB NOT DONE \n");
     struct strstruct st;
     struct strstruct *p_st = &st;
-    st.argc = 0;
-    p_st->argc = 10;
+    st.argc = 10;
+    printf("argc is [%i] \n", st.argc);
+    p_st->argc = 20;
+    printf("argc is [%i] \n", p_st->argc);
 
     return 0;
 }

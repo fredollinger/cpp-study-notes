@@ -502,6 +502,42 @@ int main()
 
     <sect1>
     <title>
+    Broken sizeof()
+    </title>
+
+    <para>
+    What do you think this result is?
+    </para>
+
+    <para><programlisting><![CDATA[
+#include <stdio.h>  // printf
+
+int main()
+{
+    const char *string0 = "1234567891011121314151617181920";
+    printf("sizeof: [%s] is [%i] \n", string0, sizeof(string0));
+
+    const char *string1 = "1";
+    printf("sizeof: [%s] is [%i] \n", string1, sizeof(string1));
+
+    return 0;
+}
+    ]]></programlisting></para>
+
+    <para><programlisting><![CDATA[
+sizeof: [1234567891011121314151617181920] is [8]
+sizeof: [1] is [8]
+    ]]></programlisting></para>
+
+    <para>
+    Thus, sizeof() does NOT tell you how large a string is, but rather how
+    many bytes are in a pointer. This should be platform dependent.
+    </para>
+
+    </sect1>
+
+    <sect1>
+    <title>
     Segmentation Faults (Program Crashes)
     </title>
 
