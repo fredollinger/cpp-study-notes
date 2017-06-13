@@ -699,6 +699,83 @@ int main()
 
     <sect1>
     <title>
+    References
+    </title>
+
+    <para>References are NOT pointers. They do NOT take a pointer. They take a regular variable's address. From the caller's point of view, they are giving a normal variable. But to the reciever, they are getting an address which can be modified. Thus, references can be used for return values.
+    </para>
+
+    <para>
+	    NOTE: That references are for C++, ONLY. They are not part of C.
+    </para>
+
+    <para><programlisting><![CDATA[
+#include <stdio.h>  // printf
+
+void setint(int &i) {
+    i = 10;
+}
+
+int main()
+{
+    int j = 5;
+
+    printf("before setint() j is [%i] \n", j);
+
+    setint(j);
+
+    printf("after setint() j is [%i] \n", j);
+
+    return 0;
+}
+    ]]></programlisting></para>
+
+    <para>
+    Passing a pointer to a function that takes a reference will fail to compile because references are 100% different than pointers.
+    </para>
+
+    <para><programlisting><![CDATA[
+#include <stdio.h>  // printf
+
+void setint(int &i) {
+    i = 10;
+}
+
+int main()
+{
+    int j = 5;
+    int *p_j = &j;
+
+    printf("before setint() j is [%i] \n", j);
+
+    setint(p_j);
+
+    printf("after setint() j is [%i] \n", j);
+
+    return 0;
+}
+    ]]></programlisting></para>
+
+    <para><programlisting><![CDATA[
+../broken-reference.cpp: In function ‘int main()’:
+../broken-reference.cpp:14:15: error: invalid conversion from ‘int*’ to ‘int’ [-fpermissive]
+     setint(p_j);
+               ^
+../broken-reference.cpp:3:6: note:   initializing argument 1 of ‘void setint(int&)’
+ void setint(int &i) {
+      ^
+../broken-reference.cpp:14:15: error: cannot bind rvalue ‘(int)((long int)p_j)’ to ‘int&’
+     setint(p_j);
+    ]]></programlisting></para>
+
+    <para>How can you fix the above program so that it will compile and run by changing a single character?</para>
+
+    <para>ANSWER: where it says setint(p_j); put an asterisk before the variable: setint(*p_j);</para>
+
+    </sect1>
+
+    <sect1>
+    <title>
     Struct
     </title>
 
