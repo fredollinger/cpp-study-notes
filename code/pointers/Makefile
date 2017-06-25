@@ -1,4 +1,4 @@
-EXES = broken-sizeof array-of-strings
+EXES = broken-sizeof array-of-strings array-of-strings2 structstruct
 src = $(wildcard *.c)
 obj = $(src:.c=.o)
 

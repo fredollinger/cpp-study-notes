@@ -1,5 +1,12 @@
-task :default => :build
+task :default => :struct
 BUILDDIR="builddir"
+
+# TODO use method missing to conjur up a
+# method to build _any_ C program
+desc "build structstruct"
+task :struct do
+    sh "make structstruct"
+end
 
 desc "build it"
 task :build => 'builddir' do
@@ -22,7 +29,7 @@ end
 #    sh "#{BUILDDIR}/daytimeserver"
 #end
 
-rule "" do |t|
-    t.name
-    sh "#{BUILDDIR}/#{t}"
-end
+#rule "" do |t|
+#    t.name
+#    sh "#{BUILDDIR}/#{t}"
+#end

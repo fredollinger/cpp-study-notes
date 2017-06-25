@@ -900,6 +900,131 @@ int main()
 
     </sect1>
 
+
+    <sect1>
+    <title>
+    Dynamic Structures in C
+    </title>
+
+    <sect2>
+    <title>
+    Dynamic Array of C Strings
+    </title>
+
+    <para> In this example, we make a dynamic array of C strings. </para>
+
+    <para><programlisting><![CDATA[
+#include <stdio.h>  // printf
+#include <stdlib.h> // malloc
+#include <string.h> // strncpy
+
+#define MAX_NUMBER_OF_STRINGS 10
+
+struct strstruct {
+    char *argv[MAX_NUMBER_OF_STRINGS];
+    int argc;
+};
+
+void addstring(struct strstruct *st, const char *string) {
+    st->argv[st->argc] = (char*)malloc(strlen(string) + 1);
+    strncpy(st->argv[st->argc], string, strlen(string) + 1);
+    st->argc++;
+}
+
+void printstring(struct strstruct *st, int i) {
+    printf("print string [%i]: [%s] \n", i, st->argv[i]);
+}
+
+int main()
+{
+    struct strstruct st;
+    struct strstruct *p_st = &st;
+    st.argc = 0;
+
+    addstring(p_st, "applejack");
+    addstring(p_st, "pinkie pie");
+
+    printstring(p_st, 0);
+    printstring(p_st, 1);
+    printstring(p_st, 2);
+
+    return 0;
+}
+    ]]></programlisting></para>
+
+    </sect2>
+
+    <sect2>
+    <title>
+    Dynamic Structure to Structure
+    </title>
+
+    <para>Filename: structstruct.c </para>
+
+    <para>We're going to make a structure that allocates a pointer to another structure. </para>
+
+    <para>Our example is going to be based upon the file structure which is
+found in the Linux kernel. We'll only implement a subset of that. </para>
+
+<para>
+From <filename> /usr/src/linux-headers-4.7.0-1-common/include/linux/fs.h </filename>:
+</para>
+
+    <para><programlisting><![CDATA[
+struct file {
+    unsigned short f_count; // number of file handles
+    struct inode * f_inode; // inode pointing to cooresponding file
+};
+
+    ]]></programlisting></para>
+
+    <para><programlisting><![CDATA[
+struct inode {
+    unsigned long i_blocks; // file size in blocks
+    char *name;             // file name (not actually part of Linux inode)
+};
+    ]]></programlisting></para>
+
+    <para>An inode is a structure that tells the kernel everything that it
+    needs to know in order to operate on a file.
+    </para>
+
+    <para>Below is the complete program:</para>
+
+    <para><programlisting><![CDATA[
+#include <stdio.h>   // printf()
+#include <stdlib.h>  // malloc()
+#include <string.h>  // strncpy()
+
+struct inode {
+    unsigned long i_blocks; // file size in blocks
+    char *name;             // file name (not actually part of Linux inode)
+};
+
+struct file {
+    unsigned short f_count; // number of file handles
+    struct inode * f_inode; // inode pointing to cooresponding file
+};
+
+int main()
+{
+    static char *filename = "struct.c";
+    struct file *myFile;
+    myFile = (struct file*) malloc(sizeof(struct file));
+    myFile->f_inode = (struct inode*) malloc(sizeof(struct inode));
+    myFile->f_count = 1;
+    myFile->f_inode->i_blocks = 10;
+    myFile->f_inode->name = (char*) malloc(sizeof(char*) * (sizeof(filename)+1));
+    strncpy(myFile->f_inode->name, filename, strlen(filename) + 1);
+
+    return 0;
+}
+    ]]></programlisting></para>
+
+    </sect2>
+
+    </sect1>
+
     <sect1>
     <title>
     Function Pointers
@@ -976,54 +1101,6 @@ int main()
 
     c = compute(a, b, subtractPtr);
     printf("subtract result: %i \n", c);
-
-    return 0;
-}
-    ]]></programlisting></para>
-
-    </sect1>
-
-    <sect1>
-    <title>
-    Dynamic Array of C Strings
-    </title>
-
-    <para> In this example, we make a dynamic array of C strings. </para>
-
-    <para><programlisting><![CDATA[
-#include <stdio.h>  // printf
-#include <stdlib.h> // malloc
-#include <string.h> // strncpy
-
-#define MAX_NUMBER_OF_STRINGS 10
-
-struct strstruct {
-    char *argv[MAX_NUMBER_OF_STRINGS];
-    int argc;
-};
-
-void addstring(struct strstruct *st, const char *string) {
-    st->argv[st->argc] = (char*)malloc(strlen(string) + 1);
-    strncpy(st->argv[st->argc], string, strlen(string) + 1);
-    st->argc++;
-}
-
-void printstring(struct strstruct *st, int i) {
-    printf("print string [%i]: [%s] \n", i, st->argv[i]);
-}
-
-int main()
-{
-    struct strstruct st;
-    struct strstruct *p_st = &st;
-    st.argc = 0;
-
-    addstring(p_st, "applejack");
-    addstring(p_st, "pinkie pie");
-
-    printstring(p_st, 0);
-    printstring(p_st, 1);
-    printstring(p_st, 2);
 
     return 0;
 }
