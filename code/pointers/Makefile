@@ -1,4 +1,9 @@
-EXES = broken-sizeof array-of-strings array-of-strings2 structstruct
+EXES = broken-sizeof  \
+array-of-strings  \
+array-of-strings2 \
+structstruct \
+pointer2pointer-wrong \
+pointer2pointer
 src = $(wildcard *.c)
 obj = $(src:.c=.o)
 
