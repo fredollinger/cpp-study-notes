@@ -3,11 +3,13 @@ array-of-strings  \
 array-of-strings2 \
 structstruct \
 pointer2pointer-wrong \
+struct-of-function-pointers \
 pointer2pointer
+
 src = $(wildcard *.c)
 obj = $(src:.c=.o)
 
-LDFLAGS = -lGL -lglut -lpng -lz -lm
+# LDFLAGS =
 
 myprog: $(obj)
 	$(CC) -o $@ $^ $(LDFLAGS)

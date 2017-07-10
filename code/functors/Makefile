@@ -1,8 +1,9 @@
-EXES = stdbind
+EXES = stdbind lambda
 src = $(wildcard *.c)
 obj = $(src:.c=.o)
 
-LDFLAGS = -lGL -lglut -lpng -lz -lm -std=c++11
+# LDFLAGS = -lGL -lglut -lpng -lz -lm -std=c++11
+LDFLAGS = -std=c++11
 
 myprog: $(obj)
 	$(CC) -o $@ $^ $(LDFLAGS)
