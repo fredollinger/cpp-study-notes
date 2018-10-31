@@ -1,0 +1,21 @@
+<?xml version="1.0"?> <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [ ]>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude" id="classes">
+    <title>Classes</title>
+    <para>
+    Basics of a class in C++
+    </para>
+
+    <sect1>
+    <title>Basic Class</title>
+
+    Given the following code, how many methods are synthesized?
+
+    <para><programlisting><![CDATA[
+    class Klass {
+    };
+    ]]></programlisting></para>
+
+
+    </sect1>
+
+</chapter> 

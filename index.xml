@@ -22,4 +22,5 @@
 </bookinfo>
 
 <xi:include href="chaps/pointers.xml" />
+<xi:include href="chaps/classes.xml" />
 </book>
