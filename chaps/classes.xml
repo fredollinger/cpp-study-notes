@@ -11,10 +11,30 @@
     Given the following code, how many methods are synthesized?
 
     <para><programlisting><![CDATA[
-    class Klass {
+    class Empty {
     };
     ]]></programlisting></para>
 
+    Copy construtor, assignment operator, destructor and a pair of address of operators.
+
+    Looks like this:
+
+    <para><programlisting><![CDATA[
+    class Empty {
+
+    public:
+        
+        Empty();
+        ~Empty();
+        Empty&;
+        operator=(const Empty &rhs);
+        Empty* operator&();
+        const Empty* operator&() const;
+
+    };
+    ]]></programlisting></para>
+
+    See page 213 of "Effective C++".
 
     </sect1>
 
